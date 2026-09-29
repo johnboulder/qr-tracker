@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-QR Tracker — Static Site Generator
+QR Tracker - Static Site Generator
 
 Reads config.json and generates:
   1. Redirect HTML pages in docs/r/<slug>/index.html  (for GitHub Pages)
   2. QR code PNG images in qr-images/<slug>.png
   3. A CNAME file for custom domain setup
-  4. An index.html landing page listing all campaigns
+  4. An index.html that tracks direct visits and redirects
 
 Usage:
     pip install -r requirements.txt
@@ -117,69 +117,81 @@ def generate_qr_image(domain: str, code: dict) -> None:
 
 
 def generate_index_page(cfg: dict) -> None:
-    """Generate a simple index.html that lists all campaigns."""
+    """Generate an index.html that tracks direct visits and redirects."""
     domain = cfg["domain"]
-    rows = ""
-    for code in cfg["codes"]:
-        slug = code["slug"]
-        label = code.get("label", slug)
-        dest = code["destination"]
-        link = f"https://{domain}/r/{slug}"
-        rows += f"""
-      <tr>
-        <td><strong>{label}</strong></td>
-        <td><a href="/r/{slug}">{link}</a></td>
-        <td><a href="{dest}">{dest}</a></td>
-      </tr>"""
+    ga_id = cfg["ga_measurement_id"]
+    destination = cfg.get("default_redirect", f"https://{domain}")
+    delay_ms = cfg.get("redirect_delay_ms", 400)
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>QR Tracker — {domain}</title>
+  <title>Redirecting...</title>
+
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id={ga_id}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){{dataLayer.push(arguments);}}
+    gtag('js', new Date());
+    gtag('config', '{ga_id}');
+    gtag('event', 'direct_visit', {{
+      campaign: 'homepage',
+      destination: '{destination}'
+    }});
+  </script>
+
+  <!-- Fallback redirect for no-JS clients -->
+  <meta http-equiv="refresh" content="2;url={destination}">
+
   <style>
     body {{
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
       background: #f8f9fa;
+      color: #333;
     }}
-    h1 {{ font-size: 1.5rem; }}
-    table {{ width: 100%; border-collapse: collapse; margin-top: 1rem; }}
-    th, td {{ text-align: left; padding: 0.6rem 0.8rem; border-bottom: 1px solid #ddd; }}
-    th {{ background: #eee; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }}
-    a {{ color: #0066cc; text-decoration: none; }}
-    a:hover {{ text-decoration: underline; }}
-    .footer {{ margin-top: 2rem; font-size: 0.8rem; color: #888; }}
+    .card {{
+      text-align: center;
+      padding: 2rem;
+    }}
+    .spinner {{
+      width: 32px;
+      height: 32px;
+      border: 3px solid #e0e0e0;
+      border-top: 3px solid #333;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 1rem;
+    }}
+    @keyframes spin {{ to {{ transform: rotate(360deg); }} }}
+    a {{ color: #0066cc; }}
   </style>
 </head>
 <body>
-  <h1>📱 QR Tracker</h1>
-  <p>Active redirect campaigns for <strong>{domain}</strong></p>
-  <table>
-    <thead>
-      <tr>
-        <th>Campaign</th>
-        <th>QR Link</th>
-        <th>Destination</th>
-      </tr>
-    </thead>
-    <tbody>{rows}
-    </tbody>
-  </table>
-  <p class="footer">
-    Analytics tracked via Google Analytics. View reports at
-    <a href="https://analytics.google.com">analytics.google.com</a>.
-  </p>
+  <div class="card">
+    <div class="spinner"></div>
+    <p>Redirecting...</p>
+    <p><small><a href="{destination}">Click here</a> if not redirected automatically.</small></p>
+  </div>
+
+  <script>
+    setTimeout(function() {{
+      window.location.href = '{destination}';
+    }}, {delay_ms});
+  </script>
 </body>
 </html>"""
 
     index_path = DOCS_DIR / "index.html"
     index_path.write_text(html, encoding="utf-8")
-    print(f"  [OK] docs/index.html (campaign listing)")
+    print(f"  [OK] docs/index.html (direct visit redirect)")
 
 
 def generate_cname(domain: str) -> None:
@@ -238,7 +250,6 @@ def main():
 
     # Clean output directories
     if DOCS_DIR.exists():
-        # Preserve CNAME if it exists (GitHub Pages sometimes needs it)
         shutil.rmtree(DOCS_DIR)
     DOCS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -262,12 +273,6 @@ def main():
     generate_404_page(cfg)
 
     print(f"\nDone! {len(codes)} campaign(s) generated.")
-    print(f"\nNext steps:")
-    print(f"  1. Edit config.json with your real GA4 ID and campaigns")
-    print(f"  2. Run: python generate.py")
-    print(f"  3. Push to GitHub and enable Pages (source: docs/)")
-    print(f"  4. Point your domain's DNS to GitHub Pages")
-    print(f"  5. QR images are in qr-images/ -- print them!")
 
 
 if __name__ == "__main__":

@@ -1,18 +1,13 @@
 {
-  "domain": "yourdomain.com",
-  "ga_measurement_id": "G-XXXXXXXXXX",
+  "domain": "logangarage.cool",
+  "ga_measurement_id": "G-W6E1NYYT3G",
   "redirect_delay_ms": 400,
-  "default_redirect": "https://yourdomain.com",
+  "default_redirect": "https://partiful.com/e/IsBIQ6Pjz5RVOAuNf7Ln",
   "codes": [
     {
-      "slug": "example-campaign",
-      "destination": "https://example.com/landing-page",
-      "label": "Example Campaign — Spring 2027"
-    },
-    {
-      "slug": "menu",
-      "destination": "https://example.com/menu",
-      "label": "Restaurant Menu QR"
+      "slug": "event",
+      "destination": "https://partiful.com/e/IsBIQ6Pjz5RVOAuNf7Ln",
+      "label": "Main Event QR"
     }
   ]
 }
