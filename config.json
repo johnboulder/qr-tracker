@@ -1,0 +1,18 @@
+{
+  "domain": "yourdomain.com",
+  "ga_measurement_id": "G-XXXXXXXXXX",
+  "redirect_delay_ms": 400,
+  "default_redirect": "https://yourdomain.com",
+  "codes": [
+    {
+      "slug": "example-campaign",
+      "destination": "https://example.com/landing-page",
+      "label": "Example Campaign — Spring 2027"
+    },
+    {
+      "slug": "menu",
+      "destination": "https://example.com/menu",
+      "label": "Restaurant Menu QR"
+    }
+  ]
+}
