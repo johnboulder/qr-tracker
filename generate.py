@@ -88,7 +88,7 @@ def generate_redirect_page(template: str, cfg: dict, code: dict) -> None:
 
     out_file = out_dir / "index.html"
     out_file.write_text(html, encoding="utf-8")
-    print(f"  ✓ docs/r/{slug}/index.html → {dest}")
+    print(f"  [OK] docs/r/{slug}/index.html -> {dest}")
 
 
 def generate_qr_image(domain: str, code: dict) -> None:
@@ -113,7 +113,7 @@ def generate_qr_image(domain: str, code: dict) -> None:
     img = qr.make_image(fill_color="black", back_color="white")
     img_path = QR_DIR / f"{slug}.png"
     img.save(str(img_path))
-    print(f"  ✓ qr-images/{slug}.png  ({url})")
+    print(f"  [OK] qr-images/{slug}.png  ({url})")
 
 
 def generate_index_page(cfg: dict) -> None:
@@ -179,14 +179,14 @@ def generate_index_page(cfg: dict) -> None:
 
     index_path = DOCS_DIR / "index.html"
     index_path.write_text(html, encoding="utf-8")
-    print(f"  ✓ docs/index.html (campaign listing)")
+    print(f"  [OK] docs/index.html (campaign listing)")
 
 
 def generate_cname(domain: str) -> None:
     """Generate a CNAME file for GitHub Pages custom domain."""
     cname_path = DOCS_DIR / "CNAME"
     cname_path.write_text(domain, encoding="utf-8")
-    print(f"  ✓ docs/CNAME ({domain})")
+    print(f"  [OK] docs/CNAME ({domain})")
 
 
 def generate_404_page(cfg: dict) -> None:
@@ -218,14 +218,14 @@ def generate_404_page(cfg: dict) -> None:
 </html>"""
     path = DOCS_DIR / "404.html"
     path.write_text(html, encoding="utf-8")
-    print(f"  ✓ docs/404.html")
+    print(f"  [OK] docs/404.html")
 
 
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 def main():
-    print("QR Tracker — Static Site Generator\n")
+    print("QR Tracker - Static Site Generator\n")
 
     cfg = load_config()
     template = load_template()
@@ -261,13 +261,13 @@ def main():
     generate_cname(domain)
     generate_404_page(cfg)
 
-    print(f"\n✅ Done! {len(codes)} campaign(s) generated.")
+    print(f"\nDone! {len(codes)} campaign(s) generated.")
     print(f"\nNext steps:")
     print(f"  1. Edit config.json with your real GA4 ID and campaigns")
     print(f"  2. Run: python generate.py")
     print(f"  3. Push to GitHub and enable Pages (source: docs/)")
     print(f"  4. Point your domain's DNS to GitHub Pages")
-    print(f"  5. QR images are in qr-images/ — print them!")
+    print(f"  5. QR images are in qr-images/ -- print them!")
 
 
 if __name__ == "__main__":
