@@ -117,18 +117,29 @@ def generate_qr_image(domain: str, code: dict) -> None:
 
 
 def generate_index_page(cfg: dict) -> None:
-    """Generate an index.html that tracks direct visits and redirects."""
+    """Generate an index.html landing page that lists all events with tracking."""
     domain = cfg["domain"]
     ga_id = cfg["ga_measurement_id"]
-    destination = cfg.get("default_redirect", f"https://{domain}")
-    delay_ms = cfg.get("redirect_delay_ms", 400)
+    codes = cfg["codes"]
+
+    # Build event cards
+    cards = ""
+    for code in codes:
+        label = code.get("label", code["slug"])
+        dest = code["destination"]
+        slug = code["slug"]
+        cards += f"""
+      <a href="{dest}" class="card" onclick="trackClick('{slug}', '{dest}')">
+        <span class="label">{label}</span>
+        <span class="arrow">&rarr;</span>
+      </a>"""
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Redirecting...</title>
+  <title>Logan Garage Events</title>
 
   <!-- Google Analytics (GA4) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id={ga_id}"></script>
@@ -138,60 +149,85 @@ def generate_index_page(cfg: dict) -> None:
     gtag('js', new Date());
     gtag('config', '{ga_id}');
     gtag('event', 'direct_visit', {{
-      campaign: 'homepage',
-      destination: '{destination}'
+      campaign: 'homepage'
     }});
+
+    function trackClick(slug, dest) {{
+      gtag('event', 'event_click', {{
+        campaign: slug,
+        destination: dest
+      }});
+    }}
   </script>
 
-  <!-- Fallback redirect for no-JS clients -->
-  <meta http-equiv="refresh" content="2;url={destination}">
-
   <style>
+    * {{ box-sizing: border-box; margin: 0; padding: 0; }}
     body {{
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      margin: 0;
       background: #f8f9fa;
       color: #333;
-    }}
-    .card {{
-      text-align: center;
       padding: 2rem;
     }}
-    .spinner {{
-      width: 32px;
-      height: 32px;
-      border: 3px solid #e0e0e0;
-      border-top: 3px solid #333;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 1rem;
+    .container {{
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
     }}
-    @keyframes spin {{ to {{ transform: rotate(360deg); }} }}
-    a {{ color: #0066cc; }}
+    h1 {{
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+    }}
+    .subtitle {{
+      color: #666;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }}
+    .card {{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1rem;
+      text-decoration: none;
+      color: #333;
+      transition: box-shadow 0.15s, border-color 0.15s;
+    }}
+    .card:hover {{
+      border-color: #0066cc;
+      box-shadow: 0 2px 12px rgba(0, 102, 204, 0.12);
+    }}
+    .label {{
+      font-weight: 600;
+      font-size: 1.05rem;
+      text-align: left;
+    }}
+    .arrow {{
+      font-size: 1.3rem;
+      color: #0066cc;
+      flex-shrink: 0;
+      margin-left: 1rem;
+    }}
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="spinner"></div>
-    <p>Redirecting...</p>
-    <p><small><a href="{destination}">Click here</a> if not redirected automatically.</small></p>
+  <div class="container">
+    <h1>Logan Garage</h1>
+    <p class="subtitle">Upcoming Events</p>
+    {cards}
   </div>
-
-  <script>
-    setTimeout(function() {{
-      window.location.href = '{destination}';
-    }}, {delay_ms});
-  </script>
 </body>
 </html>"""
 
     index_path = DOCS_DIR / "index.html"
     index_path.write_text(html, encoding="utf-8")
-    print(f"  [OK] docs/index.html (direct visit redirect)")
+    print(f"  [OK] docs/index.html (events landing page)")
 
 
 def generate_cname(domain: str) -> None:

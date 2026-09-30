@@ -2,12 +2,17 @@
   "domain": "logangarage.cool",
   "ga_measurement_id": "G-W6E1NYYT3G",
   "redirect_delay_ms": 400,
-  "default_redirect": "https://partiful.com/e/IsBIQ6Pjz5RVOAuNf7Ln",
+  "default_redirect": "https://logangarage.cool",
   "codes": [
     {
-      "slug": "event",
+      "slug": "garage-comedy-show",
       "destination": "https://partiful.com/e/IsBIQ6Pjz5RVOAuNf7Ln",
-      "label": "Main Event QR"
+      "label": "Garage Comedy Show - Saturday, Oct 17th 7:00PM"
+    },
+    {
+      "slug": "balltap",
+      "destination": "https://partiful.com/e/lK4K9THE3LtAizqQyOuQ",
+      "label": "BallTap - Friday, Oct 30th 7:30PM"
     }
   ]
 }
