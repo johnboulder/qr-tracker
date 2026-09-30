@@ -27,6 +27,12 @@
       "destination": "https://partiful.com/e/lK4K9THE3LtAizqQyOuQ",
       "label": "BallTap - Friday, Oct 30th 7:30PM",
       "event_type": "instagram_click"
+    },
+    {
+      "slug": "ig/endless-thread",
+      "destination": "https://open.spotify.com/episode/6xzTalcSnElY4YmOwJSWYO",
+      "label": "NPR Endless Thread Episode",
+      "event_type": "instagram_click"
     }
   ]
 }
