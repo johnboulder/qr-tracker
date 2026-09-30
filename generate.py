@@ -75,8 +75,9 @@ def generate_redirect_page(template: str, cfg: dict, code: dict) -> None:
     """Generate a single redirect page for a campaign."""
     slug = code["slug"]
     dest = code["destination"]
+    event_type = code.get("event_type", "qr_scan")
 
-    out_dir = DOCS_DIR / "r" / slug
+    out_dir = DOCS_DIR / slug
     out_dir.mkdir(parents=True, exist_ok=True)
 
     html = render_template(template, {
@@ -84,20 +85,25 @@ def generate_redirect_page(template: str, cfg: dict, code: dict) -> None:
         "SLUG": slug,
         "DESTINATION": dest,
         "DELAY_MS": cfg.get("redirect_delay_ms", 400),
+        "EVENT_TYPE": event_type,
     })
 
     out_file = out_dir / "index.html"
     out_file.write_text(html, encoding="utf-8")
-    print(f"  [OK] docs/r/{slug}/index.html -> {dest}")
+    print(f"  [OK] docs/{slug}/index.html -> {dest}  [{event_type}]")
 
 
 def generate_qr_image(domain: str, code: dict) -> None:
-    """Generate a QR code PNG image for a campaign."""
+    """Generate a QR code PNG image for a campaign (QR entries only)."""
     if qrcode is None:
         return  # skip silently if library not installed
 
+    # Only generate QR images for qr_scan entries
+    if code.get("event_type", "qr_scan") != "qr_scan":
+        return
+
     slug = code["slug"]
-    url = f"https://{domain}/r/{slug}"
+    url = f"https://{domain}/{slug}"
 
     QR_DIR.mkdir(parents=True, exist_ok=True)
 

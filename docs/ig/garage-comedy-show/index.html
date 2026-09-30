@@ -6,20 +6,20 @@
   <title>Redirecting…</title>
 
   <!-- Google Analytics (GA4) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id={{GA_ID}}"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W6E1NYYT3G"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', '{{GA_ID}}');
-    gtag('event', '{{EVENT_TYPE}}', {
-      campaign: '{{SLUG}}',
-      destination: '{{DESTINATION}}'
+    gtag('config', 'G-W6E1NYYT3G');
+    gtag('event', 'instagram_click', {
+      campaign: 'ig/garage-comedy-show',
+      destination: 'https://partiful.com/e/IsBIQ6Pjz5RVOAuNf7Ln'
     });
   </script>
 
   <!-- Fallback redirect for no-JS clients -->
-  <meta http-equiv="refresh" content="2;url={{DESTINATION}}">
+  <meta http-equiv="refresh" content="2;url=https://partiful.com/e/IsBIQ6Pjz5RVOAuNf7Ln">
 
   <style>
     body {
@@ -53,14 +53,14 @@
   <div class="card">
     <div class="spinner"></div>
     <p>Redirecting…</p>
-    <p><small><a href="{{DESTINATION}}">Click here</a> if not redirected automatically.</small></p>
+    <p><small><a href="https://partiful.com/e/IsBIQ6Pjz5RVOAuNf7Ln">Click here</a> if not redirected automatically.</small></p>
   </div>
 
   <script>
     // Brief delay so the GA event has time to fire before navigation
     setTimeout(function() {
-      window.location.href = '{{DESTINATION}}';
-    }, {{DELAY_MS}});
+      window.location.href = 'https://partiful.com/e/IsBIQ6Pjz5RVOAuNf7Ln';
+    }, 400);
   </script>
 </body>
 </html>

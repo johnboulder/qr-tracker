@@ -7,12 +7,26 @@
     {
       "slug": "garage-comedy-show",
       "destination": "https://partiful.com/e/IsBIQ6Pjz5RVOAuNf7Ln",
-      "label": "Garage Comedy Show - Saturday, Oct 17th 7:00PM"
+      "label": "Garage Comedy Show - Saturday, Oct 17th 7:00PM",
+      "event_type": "qr_scan"
     },
     {
       "slug": "balltap",
       "destination": "https://partiful.com/e/lK4K9THE3LtAizqQyOuQ",
-      "label": "BallTap - Friday, Oct 30th 7:30PM"
+      "label": "BallTap - Friday, Oct 30th 7:30PM",
+      "event_type": "qr_scan"
+    },
+    {
+      "slug": "ig/garage-comedy-show",
+      "destination": "https://partiful.com/e/IsBIQ6Pjz5RVOAuNf7Ln",
+      "label": "Garage Comedy Show - Saturday, Oct 17th 7:00PM",
+      "event_type": "instagram_click"
+    },
+    {
+      "slug": "ig/balltap",
+      "destination": "https://partiful.com/e/lK4K9THE3LtAizqQyOuQ",
+      "label": "BallTap - Friday, Oct 30th 7:30PM",
+      "event_type": "instagram_click"
     }
   ]
 }
