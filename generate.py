@@ -128,9 +128,11 @@ def generate_index_page(cfg: dict) -> None:
     ga_id = cfg["ga_measurement_id"]
     codes = cfg["codes"]
 
-    # Build event cards
+    # Build event cards (only show main events, not source-specific duplicates)
     cards = ""
     for code in codes:
+        if code.get("event_type", "qr_scan") != "qr_scan":
+            continue
         label = code.get("label", code["slug"])
         dest = code["destination"]
         slug = code["slug"]
