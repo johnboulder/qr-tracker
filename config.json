@@ -33,6 +33,18 @@
       "destination": "https://open.spotify.com/episode/6xzTalcSnElY4YmOwJSWYO",
       "label": "NPR Endless Thread Episode",
       "event_type": "instagram_click"
+    },
+    {
+      "slug": "ad/garage-comedy-show",
+      "destination": "https://partiful.com/e/IsBIQ6Pjz5RVOAuNf7Ln",
+      "label": "Garage Comedy Show - Ad Link",
+      "event_type": "ad_click"
+    },
+    {
+      "slug": "ad/balltap",
+      "destination": "https://partiful.com/e/lK4K9THE3LtAizqQyOuQ",
+      "label": "BallTap - Ad Link",
+      "event_type": "ad_click"
     }
   ]
 }
