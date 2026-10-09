@@ -11,10 +11,11 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', '{{GA_ID}}');
+    gtag('config', '{{GA_ID}}', { 'transport_type': 'beacon' });
     gtag('event', '{{EVENT_TYPE}}', {
       campaign: '{{SLUG}}',
-      destination: '{{DESTINATION}}'
+      destination: '{{DESTINATION}}',
+      transport_type: 'beacon'
     });
   </script>
 

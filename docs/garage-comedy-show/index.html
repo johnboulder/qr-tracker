@@ -11,10 +11,11 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-W6E1NYYT3G');
+    gtag('config', 'G-W6E1NYYT3G', { 'transport_type': 'beacon' });
     gtag('event', 'qr_scan', {
       campaign: 'garage-comedy-show',
-      destination: 'https://partiful.com/e/IsBIQ6Pjz5RVOAuNf7Ln'
+      destination: 'https://partiful.com/e/IsBIQ6Pjz5RVOAuNf7Ln',
+      transport_type: 'beacon'
     });
   </script>
 
