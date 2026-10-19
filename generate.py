@@ -126,8 +126,14 @@ def generate_index_page(cfg: dict) -> None:
     """Generate an index.html that tracks direct visits and redirects directly to the primary event."""
     domain = cfg["domain"]
     ga_id = cfg["ga_measurement_id"]
-    destination = cfg.get("default_redirect", "https://partiful.com/e/IsBIQ6Pjz5RVOAuNf7Ln")
+    destination = cfg.get("default_redirect", "https://partiful.com/e/lK4K9THE3LtAizqQyOuQ")
     delay_ms = cfg.get("redirect_delay_ms", 400)
+
+    label = "BallTap"
+    for code in cfg.get("codes", []):
+        if code.get("destination") == destination:
+            label = code.get("label", label).split(" - ")[0]
+            break
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -184,7 +190,7 @@ def generate_index_page(cfg: dict) -> None:
 <body>
   <div class="card">
     <div class="spinner"></div>
-    <p>Redirecting to Garage Comedy Show...</p>
+    <p>Redirecting to {label}...</p>
     <p><small><a href="{destination}">Click here</a> if not redirected automatically.</small></p>
   </div>
 
