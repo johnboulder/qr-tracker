@@ -6,8 +6,8 @@
   "codes": [
     {
       "slug": "garage-comedy-show",
-      "destination": "https://partiful.com/e/IsBIQ6Pjz5RVOAuNf7Ln",
-      "label": "Garage Comedy Show - Saturday, Oct 17th 7:00PM",
+      "destination": "https://partiful.com/e/jfjbqzk4XOj45i2hHSFc",
+      "label": "Garage Comedy Show",
       "event_type": "qr_scan"
     },
     {
@@ -18,8 +18,8 @@
     },
     {
       "slug": "ig/garage-comedy-show",
-      "destination": "https://partiful.com/e/IsBIQ6Pjz5RVOAuNf7Ln",
-      "label": "Garage Comedy Show - Saturday, Oct 17th 7:00PM",
+      "destination": "https://partiful.com/e/jfjbqzk4XOj45i2hHSFc",
+      "label": "Garage Comedy Show",
       "event_type": "instagram_click"
     },
     {
@@ -36,7 +36,7 @@
     },
     {
       "slug": "ad/garage-comedy-show",
-      "destination": "https://partiful.com/e/IsBIQ6Pjz5RVOAuNf7Ln",
+      "destination": "https://partiful.com/e/jfjbqzk4XOj45i2hHSFc",
       "label": "Garage Comedy Show - Ad Link",
       "event_type": "ad_click"
     },
