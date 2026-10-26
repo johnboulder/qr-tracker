@@ -5,21 +5,23 @@
   "default_redirect": "https://logangarage.cool",
   "codes": [
     {
-      "slug": "garage-comedy-show",
-      "destination": "https://partiful.com/e/jfjbqzk4XOj45i2hHSFc",
-      "label": "Garage Comedy Show",
-      "event_type": "qr_scan"
-    },
-    {
       "slug": "balltap",
       "destination": "https://partiful.com/e/lK4K9THE3LtAizqQyOuQ",
       "label": "BallTap - Friday, Oct 30th 7:30PM",
-      "event_type": "qr_scan"
+      "event_type": "qr_scan",
+      "flyer": "assets/balltap-flyer.png"
+    },
+    {
+      "slug": "garage-comedy-show",
+      "destination": "https://partiful.com/e/jfjbqzk4XOj45i2hHSFc",
+      "label": "Garage Comedy Show - Thursday Nov 5th 7:30PM",
+      "event_type": "qr_scan",
+      "flyer": "assets/garage-comedy-flyer.png"
     },
     {
       "slug": "ig/garage-comedy-show",
       "destination": "https://partiful.com/e/jfjbqzk4XOj45i2hHSFc",
-      "label": "Garage Comedy Show",
+      "label": "Garage Comedy Show - Thursday Nov 5th 7:30PM",
       "event_type": "instagram_click"
     },
     {

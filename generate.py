@@ -34,6 +34,7 @@ CONFIG_PATH = ROOT / "config.json"
 TEMPLATE_PATH = ROOT / "templates" / "redirect.html"
 DOCS_DIR = ROOT / "docs"
 QR_DIR = ROOT / "qr-images"
+ASSETS_DIR = ROOT / "assets"
 
 
 # ---------------------------------------------------------------------------
@@ -123,7 +124,7 @@ def generate_qr_image(domain: str, code: dict) -> None:
 
 
 def generate_index_page(cfg: dict) -> None:
-    """Generate an index.html landing page that lists all events with tracking."""
+    """Generate an index.html landing page that lists all events with tracking and flyers."""
     domain = cfg["domain"]
     ga_id = cfg["ga_measurement_id"]
     codes = cfg["codes"]
@@ -136,7 +137,21 @@ def generate_index_page(cfg: dict) -> None:
         label = code.get("label", code["slug"])
         dest = code["destination"]
         slug = code["slug"]
-        cards += f"""
+        flyer = code.get("flyer")
+
+        if flyer:
+            cards += f"""
+      <a href="{dest}" class="card flyer-card" onclick="trackClick(event, '{slug}', '{dest}')">
+        <div class="flyer-img-wrap">
+          <img src="{flyer}" alt="{label}" class="flyer-img" loading="eager">
+        </div>
+        <div class="card-footer">
+          <span class="label">{label}</span>
+          <span class="rsvp-btn">RSVP &amp; Tickets &rarr;</span>
+        </div>
+      </a>"""
+        else:
+            cards += f"""
       <a href="{dest}" class="card" onclick="trackClick(event, '{slug}', '{dest}')">
         <span class="label">{label}</span>
         <span class="arrow">&rarr;</span>
@@ -181,46 +196,88 @@ def generate_index_page(cfg: dict) -> None:
       min-height: 100vh;
       display: flex;
       justify-content: center;
-      align-items: center;
-      background: #f8f9fa;
-      color: #333;
-      padding: 2rem;
+      align-items: flex-start;
+      background: #f4f5f7;
+      color: #222;
+      padding: 2.5rem 1rem;
     }}
     .container {{
-      max-width: 500px;
+      max-width: 520px;
       width: 100%;
       text-align: center;
     }}
     h1 {{
-      font-size: 1.6rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
     }}
     .subtitle {{
       color: #666;
       margin-bottom: 2rem;
-      font-size: 0.95rem;
+      font-size: 1rem;
+      font-weight: 500;
     }}
     .card {{
+      display: block;
+      background: #fff;
+      border: 1px solid #e2e5eb;
+      border-radius: 16px;
+      margin-bottom: 2rem;
+      text-decoration: none;
+      color: #222;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+      cursor: pointer;
+    }}
+    .card:hover, .card:active {{
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      border-color: #0066cc;
+    }}
+    .flyer-img-wrap {{
+      width: 100%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid #f0f0f0;
+    }}
+    .flyer-img {{
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }}
+    .card-footer {{
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
       background: #fff;
-      border: 1px solid #e0e0e0;
-      border-radius: 12px;
-      padding: 1.2rem 1.5rem;
-      margin-bottom: 1rem;
-      text-decoration: none;
-      color: #333;
-      transition: box-shadow 0.15s, border-color 0.15s;
-    }}
-    .card:hover {{
-      border-color: #0066cc;
-      box-shadow: 0 2px 12px rgba(0, 102, 204, 0.12);
     }}
     .label {{
-      font-weight: 600;
+      font-weight: 700;
       font-size: 1.05rem;
       text-align: left;
+      line-height: 1.3;
+    }}
+    .rsvp-btn {{
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+      background: #0066cc;
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.55rem 1rem;
+      border-radius: 8px;
+      transition: background 0.15s;
+    }}
+    .card:hover .rsvp-btn {{
+      background: #0052a3;
     }}
     .arrow {{
       font-size: 1.3rem;
@@ -302,6 +359,11 @@ def main():
     if DOCS_DIR.exists():
         shutil.rmtree(DOCS_DIR)
     DOCS_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Copy assets if present
+    if ASSETS_DIR.exists():
+        shutil.copytree(ASSETS_DIR, DOCS_DIR / "assets", dirs_exist_ok=True)
+        print("  [OK] Copied assets to docs/assets")
 
     # Generate all pages
     print("Generating redirect pages:")
