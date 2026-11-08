@@ -12,22 +12,9 @@
       "flyer": "assets/garage-comedy-flyer.jpg"
     },
     {
-      "slug": "balltap",
-      "destination": "https://partiful.com/e/lK4K9THE3LtAizqQyOuQ",
-      "label": "BallTap - Friday, Oct 30th 7:30PM",
-      "event_type": "qr_scan",
-      "flyer": "assets/balltap-flyer.png"
-    },
-    {
       "slug": "ig/garage-comedy-show",
       "destination": "https://partiful.com/e/50DrIZm1Q1RsKX70GgJC",
       "label": "Garage Comedy Show - Saturday Nov 21st 7:00PM",
-      "event_type": "instagram_click"
-    },
-    {
-      "slug": "ig/balltap",
-      "destination": "https://partiful.com/e/lK4K9THE3LtAizqQyOuQ",
-      "label": "BallTap - Friday, Oct 30th 7:30PM",
       "event_type": "instagram_click"
     },
     {
@@ -40,12 +27,6 @@
       "slug": "ad/garage-comedy-show",
       "destination": "https://partiful.com/e/50DrIZm1Q1RsKX70GgJC",
       "label": "Garage Comedy Show - Ad Link",
-      "event_type": "ad_click"
-    },
-    {
-      "slug": "ad/balltap",
-      "destination": "https://partiful.com/e/lK4K9THE3LtAizqQyOuQ",
-      "label": "BallTap - Ad Link",
       "event_type": "ad_click"
     }
   ]
